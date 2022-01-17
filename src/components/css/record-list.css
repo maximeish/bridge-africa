@@ -10,7 +10,7 @@
 }
 
 .header-wrapper {
-  width: 70vw;
+  width: 70vw !important;
 }
 
 .list-heading {
