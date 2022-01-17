@@ -51,12 +51,13 @@ export default function GeoLocation(props) {
       const data = async () => {
         (await isCountry)
           ? geonames.countryInfo({}).then((res) => {
-              console.log(res);
               setOptions(res.geonames);
             })
-          : geonames.children({ geonameId: geoId }).then((res) => {
-              if (res.totalResultsCount) setOptions(res.geonames);
-            });
+          : geonames
+              .children({ geonameId: geoId.split(">")[0] })
+              .then((res) => {
+                if (res.totalResultsCount) setOptions(res.geonames);
+              });
       };
       data();
     } catch (err) {
@@ -72,7 +73,7 @@ export default function GeoLocation(props) {
   };
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl variant="outlined" className={classes.formControl} required>
       <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
         {locationTitle}
       </InputLabel>
@@ -88,7 +89,15 @@ export default function GeoLocation(props) {
           <em>-</em>
         </MenuItem>
         {options.map((v, index) => (
-          <MenuItem key={index} value={v.geonameId}>
+          <MenuItem
+            required
+            key={index}
+            value={
+              isCountry
+                ? `${v.geonameId}>${v.countryName}`
+                : `${v.geonameId}>${v.name}`
+            }
+          >
             {isCountry ? v.countryName : v.name}
           </MenuItem>
         ))}
