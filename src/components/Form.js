@@ -17,8 +17,6 @@ import RecordList from "./RecordList";
 import "./css/form.css";
 import axios from "axios";
 
-import Checkbox from "@material-ui/core/Checkbox";
-
 const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: "1.5em",
@@ -45,8 +43,6 @@ const Form = () => {
   const [city, setCity] = useState("");
 
   const [livingWithDiabetes, setLivingWithDiabetes] = useState("");
-
-  const [minors, setMinors] = useState(false);
 
   const SaveRecord = (e) => {
     e.preventDefault();
